@@ -1,4 +1,4 @@
-import { all, call } from 'redux-saga/effects'
+import { all, call, take } from 'redux-saga/effects'
 import constants from '../constants'
 
 function* fetchCurrencies(pairId) {

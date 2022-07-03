@@ -1,4 +1,4 @@
-import { store } from '../configure-store'
+import store from '../configure-store'
 import constants from '../constants'
 
 export const changeCurrencyPair = (pairId) => {

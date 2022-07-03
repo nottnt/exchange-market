@@ -6,6 +6,8 @@ export default function market(state = {}, action) {
     switch (type) {
         case constants.CHANGE_CURRENCY:
             return { ...state, payload }
+        case 'TEST':
+            return { ...state, ...payload }
         default:
             return state
     }

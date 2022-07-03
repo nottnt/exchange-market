@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux'
+import { connectRouter } from 'connected-react-router'
 import market from './market'
 
-export default combineReducers({
+const createRootReducer = (history) => combineReducers({
     market,
+    router: connectRouter(history),
 })
+export default createRootReducer
