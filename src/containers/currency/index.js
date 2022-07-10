@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
     useParams
 } from "react-router-dom";
@@ -13,8 +13,6 @@ import {
 import { push } from 'react-router-redux'
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetch24HrsTicker, stopFetch24HrsTicker } from '../../actions/market'
-import { setLoading } from '../../actions/app'
 import CurrencyCard from '../../components/currencyCard'
 import AppLayout from '../../components/layout'
 const { Title } = Typography
@@ -23,22 +21,13 @@ const Currency = () => {
     const { pairId } = useParams();
     const dispatch = useDispatch()
     const currency = useSelector(state =>
-        state.market.currency
+        state.market.currencies
+            .find(currency => currency.symbol === pairId.toLowerCase())
     )
     const loading = useSelector(state =>
         state.app.isLoading
     )
 
-    useEffect(() => {
-        dispatch(setLoading())
-        dispatch(fetch24HrsTicker(pairId))
-
-        return () => {
-            dispatch(stopFetch24HrsTicker())
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pairId])
 
     const handleChangeCurrency = (pairId) => {
         dispatch(push(`/market/${pairId}`))

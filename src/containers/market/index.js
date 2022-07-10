@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Divider,
     Space,
@@ -17,8 +17,6 @@ import { FaSearch } from 'react-icons/fa';
 
 import AppLayout from '../../components/layout'
 import CurrencyCard from '../../components/currencyCard'
-import { fetch24HrsTicker, stopFetch24HrsTicker } from '../../actions/market'
-import { setLoading } from '../../actions/app'
 import './index.scss'
 const { Title, Text } = Typography;
 
@@ -57,24 +55,11 @@ const Market = () => {
         },
         {
             title: 'Price',
-            dataIndex: 'askPrice',
-            key: 'askPrice',
-            sorter: (a, b) => a.askPrice - b.askPrice,
+            dataIndex: 'closePrice',
+            key: 'closePrice',
+            sorter: (a, b) => a.closePrice - b.closePrice,
             render: (text, record) => {
-                const isPositiveNum = Number(record.priceChangePercent) > 0
-                const isZero = Number(text) === 0
-                return <Text type={isPositiveNum ? 'success' : isZero ? '' : 'danger'}>฿{text}</Text>
-            }
-        },
-        {
-            title: '24h Change',
-            dataIndex: 'priceChangePercent',
-            key: 'priceChangePercent',
-            sorter: (a, b) => a.priceChangePercent - b.priceChangePercent,
-            render: (text) => {
-                const isPositiveNum = Number(text) > 0
-                const isZero = Number(text) === 0
-                return <Text type={isPositiveNum ? 'success' : isZero ? '' : 'danger'}>{Number(text).toFixed(2)}%</Text>
+                return <Text>฿{text}</Text>
             }
         },
         {
@@ -84,16 +69,6 @@ const Market = () => {
             sorter: (a, b) => a.volume - b.volume,
         },
     ];
-
-    useEffect(() => {
-        dispatch(setLoading())
-        dispatch(fetch24HrsTicker())
-
-        return () => {
-            dispatch(stopFetch24HrsTicker())
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const onSearch = (event) => {
         if (event.target.value) {
@@ -131,7 +106,7 @@ const Market = () => {
                                     span: 6,
                                     offset: !index ? 1 : 2,
                                 }}
-                                key={list.symbol}
+                                key={list.symbol || index}
                             >
                                 <CurrencyCard
                                     className="currency-card"

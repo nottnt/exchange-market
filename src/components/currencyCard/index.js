@@ -4,7 +4,7 @@ import './index.scss';
 
 const index = ({
     symbol = '',
-    askPrice = '',
+    closePrice = '',
     volume = '',
     className,
     isLoading = false,
@@ -20,7 +20,7 @@ const index = ({
                 !isLoading &&
                 <Card className={className} onClick={onClick}>
                     <p>{symbol.replace('_', '/').toUpperCase()}</p>
-                    <p>฿{askPrice}</p>
+                    <p>฿{closePrice}</p>
                     <p>Volume: {volume}</p>
                 </Card>
             }

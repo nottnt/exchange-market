@@ -1,8 +1,19 @@
-import { all, call, take, delay, put, fork, cancel, select } from 'redux-saga/effects'
+import {
+    all,
+    call,
+    take,
+    delay,
+    put,
+    fork,
+    cancel,
+    select
+} from 'redux-saga/effects'
+import { eventChannel } from 'redux-saga'
 import { get24HrsTicker } from '../services'
 import { updateCurrenciesData, updateCurrencyData } from '../actions/market'
 import { stopLoading } from '../actions/app'
 import constants from '../constants'
+import { formatWsMsgData } from '../utils'
 
 function* fetch24HrsTicker(pairId) {
     while (true) {
@@ -24,17 +35,45 @@ function* watchFetch24HrsTicker() {
     }
 }
 
+function initWebsocket() {
+    return eventChannel(emitter => {
+        const ws = new WebSocket('wss://ws.satangcorp.com/ws/!miniTicker@arr@3000ms')
+        ws.onopen = () => {
+            console.log('opening...')
+        }
+        ws.onerror = (error) => {
+            console.log('WebSocket error ' + error)
+            console.dir(error)
+        }
+        ws.onmessage = (e) => {
 
-function* watchTestMarket() {
-    // while(true) {
-    const { payload } = yield take('TEST')
-    console.log('market test', payload)
-    // }
+            try {
+                let msg = null
+                msg = JSON.parse(e.data)
+                const currenciesData = formatWsMsgData(msg)
+                emitter(updateCurrenciesData(currenciesData))
+            } catch (e) {
+                console.error(`Error parsing : ${e.data}`)
+            }
+        }
+        // unsubscribe function
+        return () => {
+            console.log('Socket off')
+        }
+    })
+}
+
+function* wsSubscribe() {
+    const channel = yield call(initWebsocket)
+    while (true) {
+        const action = yield take(channel)
+        yield put(action)
+    }
 }
 
 export default function* marketSaga() {
     yield all([
         watchFetch24HrsTicker(),
-        watchTestMarket()
+        wsSubscribe()
     ])
 }
