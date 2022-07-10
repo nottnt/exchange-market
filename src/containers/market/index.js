@@ -47,6 +47,7 @@ const Market = () => {
             title: 'Name',
             dataIndex: 'symbol',
             key: 'symbol',
+            defaultSortOrder: 'ascend',
             sorter: (a, b) => a.symbol.charCodeAt(0) - b.symbol.charCodeAt(0),
             render: (text) => {
                 return text.split('_')[0].toUpperCase()
