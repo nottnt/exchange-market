@@ -10,7 +10,6 @@ export const changeCurrencyPair = (pairId) => {
 }
 
 export const fetch24HrsTicker = (pairId) => {
-    console.log('fetch24HrsTicker act')
     return {
         type: constants.FETCH_24H_TICKER,
         payload: {

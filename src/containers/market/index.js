@@ -49,6 +49,7 @@ const Market = () => {
             title: 'Name',
             dataIndex: 'symbol',
             key: 'symbol',
+            defaultSortOrder: 'ascend',
             sorter: (a, b) => a.symbol.charCodeAt(0) - b.symbol.charCodeAt(0),
             render: (text) => {
                 return text.split('_')[0].toUpperCase()
@@ -57,9 +58,9 @@ const Market = () => {
         },
         {
             title: 'Price',
-            dataIndex: 'askPrice',
-            key: 'askPrice',
-            sorter: (a, b) => a.askPrice - b.askPrice,
+            dataIndex: 'lastPrice',
+            key: 'lastPrice',
+            sorter: (a, b) => a.lastPrice - b.lastPrice,
             render: (text, record) => {
                 const isPositiveNum = Number(record.priceChangePercent) > 0
                 const isZero = Number(text) === 0

@@ -25,16 +25,8 @@ function* watchFetch24HrsTicker() {
 }
 
 
-function* watchTestMarket() {
-    // while(true) {
-    const { payload } = yield take('TEST')
-    console.log('market test', payload)
-    // }
-}
-
 export default function* marketSaga() {
     yield all([
-        watchFetch24HrsTicker(),
-        watchTestMarket()
+        watchFetch24HrsTicker()
     ])
 }
