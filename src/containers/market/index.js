@@ -63,7 +63,7 @@ const Market = () => {
             render: (text, record) => {
                 const isPositiveNum = Number(record.priceChangePercent) > 0
                 const isZero = Number(text) === 0
-                return <Text type={isPositiveNum ? 'success' : isZero ? '' : 'danger'}>{text}</Text>
+                return <Text type={isPositiveNum ? 'success' : isZero ? '' : 'danger'}>฿{text}</Text>
             }
         },
         {

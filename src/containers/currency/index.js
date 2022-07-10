@@ -93,7 +93,7 @@ const Currency = () => {
                         offset: 2,
                     }}
                 >
-                    <CurrencyCard {...currency} isLoading={loading} />
+                    <CurrencyCard className="currency-card" {...currency} isLoading={loading} />
                 </Col>
             </Row>
         </AppLayout>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Skeleton } from 'antd';
-
+import './index.scss';
 
 const index = ({
     symbol = '',
@@ -20,7 +20,7 @@ const index = ({
                 !isLoading &&
                 <Card className={className} onClick={onClick}>
                     <p>{symbol.replace('_', '/').toUpperCase()}</p>
-                    <p>{askPrice}</p>
+                    <p>฿{askPrice}</p>
                     <p>Volume: {volume}</p>
                 </Card>
             }
