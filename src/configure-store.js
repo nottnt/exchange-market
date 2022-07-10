@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
+import { routerMiddleware } from 'connected-react-router'
 
 import reducers from './reducers'
 import rootSagas from './sagas'
-
 import "regenerator-runtime/runtime";
+
 export const history = createBrowserHistory()
 
 const configureStore = (initialState = {}) => {
@@ -22,9 +22,7 @@ const configureStore = (initialState = {}) => {
     )
 
     sagaMiddleware.run(rootSagas)
-    return {
-        ...store,
-    }
+    return store
 }
 
 export default configureStore
