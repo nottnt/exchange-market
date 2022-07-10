@@ -1,28 +1,27 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
-import { Provider } from "react-redux";
+
+import { Route, Switch } from 'react-router' // react-router v4/v5
 import { ConnectedRouter } from 'connected-react-router'
+
+import { Provider } from "react-redux";
 import configureStore, { history } from './configure-store'
-import Market from './containers/Market'
-import Home from './containers/Home'
+import Market from './containers/market'
+import Home from './containers/home'
+import Currency from './containers/currency'
 
 import './App.scss';
+
 const store = configureStore({})
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        {/* <ConnectedRouter history={history}> */}
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="market/:pairId" element={<Market />} />
-            </Routes>
-          </Router>
-        {/* </ConnectedRouter> */}
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route exact path="/" render={() => <Home />} />
+            <Route exact path="/market" render={() => <Market />} />
+            <Route path="/market/:pairId" render={() => <Currency />} />
+          </Switch>
+        </ConnectedRouter>
       </div>
     </Provider>
   );
